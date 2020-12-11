@@ -1,20 +1,38 @@
-import React from 'react'
-import Auxo from '../../hoc/Auxo'
-import SideDrawer from '../Navigation/SideDrawer/SideDrawer'
-import Toolbar from '../Navigation/Toolbar/Toolbar'
-import Styles from './layout.module.css'
+import React, { Component } from 'react';
 
-function Layout(props) {
-    return (
-        <Auxo>
-            <Toolbar />
-            <SideDrawer />
-        <main className={Styles.content}>
-{props.children}
-        </main>
-        </Auxo>
-        
-    )
+import Auxo from '../../hoc/Auxo';
+import classes from './Layout.module.css';
+import Toolbar from '../Navigation/Toolbar/Toolbar';
+import SideDrawer from '../Navigation/SideDrawer/SideDrawer';
+
+class Layout extends Component {
+    state = {
+        showSideDrawer: false
+    }
+
+    sideDrawerClosedHandler = () => {
+        this.setState( { showSideDrawer: false } );
+    }
+
+    sideDrawerToggleHandler = () => {
+        this.setState( ( prevState ) => {
+            return { showSideDrawer: !prevState.showSideDrawer };
+        } );
+    }
+
+    render () {
+        return (
+            <Auxo>
+                <Toolbar drawerToggleClicked={this.sideDrawerToggleHandler} />
+                <SideDrawer
+                    open={this.state.showSideDrawer}
+                    closed={this.sideDrawerClosedHandler} />
+                <main className={classes.Content}>
+                    {this.props.children}
+                </main>
+            </Auxo>
+        )
+    }
 }
 
-export default Layout
+export default Layout;

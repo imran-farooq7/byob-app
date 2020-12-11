@@ -1,11 +1,3 @@
-import React from 'react'
+const aux = (props) => props.children;
 
-function Auxo(props) {
-    return (
-        <div>
-            {props.children}
-        </div>
-    )
-}
-
-export default Auxo
+export default aux;
