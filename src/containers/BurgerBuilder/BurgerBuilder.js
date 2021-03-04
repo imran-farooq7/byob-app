@@ -31,7 +31,7 @@ class BurgerBuilder extends Component {
         loading: false,
     }
     componentDidMount() {
-        axios.get('https://byob-app-3145d-default-rtdb.firebaseio.com/ing.json')
+        axios.get('https://byob-app-3145d-default-rtdb.firebaseio.com/ingredients.json')
         .then(response => {
             //console.log(response)
             this.setState({
