@@ -4,6 +4,7 @@ import instance from "../../axios";
 import Button from "../../components/UI/Button/Button";
 import styles from "./form.module.css";
 import Input from "../../components/UI/Input/Input";
+import { connect } from "react-redux";
 
 class Form extends Component {
   state = {
@@ -114,19 +115,10 @@ class Form extends Component {
       ].value;
     }
     const order = {
-      ingredients: this.props.ingredients,
+      ingredients: this.props.ings,
       price: this.props.price,
       orderdata: formData,
     };
-    instance
-      .post("/orders.json", order)
-      .then((response) => {
-        this.setState({ loading: false });
-        this.props.history.push("/");
-      })
-      .catch((error) => {
-        this.setState({ loading: false });
-      });
   };
 
   render() {
@@ -164,4 +156,11 @@ class Form extends Component {
     );
   }
 }
-export default Form;
+const mapStateToProps = (state) => {
+  return {
+    ings: state.ingredients,
+    price: state.totalPrice,
+  };
+};
+const mapDispatchToProps = () => {};
+export default connect(mapStateToProps)(Form);
