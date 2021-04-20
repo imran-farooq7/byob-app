@@ -5,6 +5,7 @@ import Button from "../../components/UI/Button/Button";
 import styles from "./form.module.css";
 import Input from "../../components/UI/Input/Input";
 import { connect } from "react-redux";
+import * as actions from "../../store/actions/index";
 
 class Form extends Component {
   state = {
@@ -76,8 +77,6 @@ class Form extends Component {
         },
       },
     },
-
-    loading: false,
   };
   checkValidity = (value, rules) => {
     let isValid = true;
@@ -119,6 +118,7 @@ class Form extends Component {
       price: this.props.price,
       orderdata: formData,
     };
+    this.props.onBurgerOrder(order);
   };
 
   render() {
@@ -145,7 +145,7 @@ class Form extends Component {
         <Button btnType="Success">ORDER</Button>
       </form>
     );
-    if (this.state.loading) {
+    if (this.props.loading) {
       form = <Spinner />;
     }
     return (
@@ -158,9 +158,15 @@ class Form extends Component {
 }
 const mapStateToProps = (state) => {
   return {
-    ings: state.ingredients,
-    price: state.totalPrice,
+    ings: state.burgerBuilder.ingredients,
+    price: state.burgerBuilder.totalPrice,
+    loading: state.order.loading,
   };
 };
-const mapDispatchToProps = () => {};
-export default connect(mapStateToProps)(Form);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onBurgerOrder: (orderData) =>
+      dispatch(actions.purchaseBurgerStart(orderData)),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Form);

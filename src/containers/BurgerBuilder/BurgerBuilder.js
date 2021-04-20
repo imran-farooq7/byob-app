@@ -5,7 +5,7 @@ import Burger from "../../components/Burger/Burger";
 import BuildControls from "../../components/Burger/BuildControls/BuildControls";
 import Modal from "../../components/UI/Modal/Modal";
 import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
-
+import * as actionTypes from "../../store/actions/order";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import * as burgerBuilderActions from "../../store/actions/index";
 
@@ -44,6 +44,7 @@ class BurgerBuilder extends Component {
   };
 
   purchaseContinueHandler = () => {
+    this.props.onInitPurchase();
     this.props.history.push("/checkout");
   };
 
@@ -101,8 +102,8 @@ class BurgerBuilder extends Component {
 }
 const mapStateToProps = (state) => {
   return {
-    ings: state.ingredients,
-    price: state.totalPrice,
+    ings: state.burgerBuilder.ingredients,
+    price: state.burgerBuilder.totalPrice,
   };
 };
 const mapDispatchToProps = (dispatch) => {
@@ -112,6 +113,7 @@ const mapDispatchToProps = (dispatch) => {
     onIngRemoved: (ingName) =>
       dispatch(burgerBuilderActions.removeIngredients(ingName)),
     onInitIngredients: () => dispatch(burgerBuilderActions.initIngredient()),
+    onInitPurchase: () => dispatch(actionTypes.purchaseInit()),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(BurgerBuilder);
