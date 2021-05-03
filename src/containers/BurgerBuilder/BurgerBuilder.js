@@ -113,7 +113,7 @@ const mapDispatchToProps = (dispatch) => {
     onIngRemoved: (ingName) =>
       dispatch(burgerBuilderActions.removeIngredients(ingName)),
     onInitIngredients: () => dispatch(burgerBuilderActions.initIngredient()),
-    onInitPurchase: () => dispatch(actionTypes.purchaseInit()),
+    onInitPurchase: (token) => dispatch(actionTypes.purchaseInit(token)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(BurgerBuilder);

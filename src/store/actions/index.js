@@ -5,4 +5,4 @@ export {
 } from "./burgerBulder";
 
 export { purchaseBurgerStart, purchaseInit, fetchOrders } from "./order";
-export { auth } from "./auth";
+export { auth, logout } from "./auth";

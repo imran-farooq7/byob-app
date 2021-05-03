@@ -15,11 +15,11 @@ export const purchaseBurgerFail = (error) => {
   };
 };
 
-export const purchaseBurgerStart = (orderData) => {
+export const purchaseBurgerStart = (orderData, token) => {
   return (dispatch) => {
     dispatch(purchaseBurgerStarting());
     instance
-      .post("/orders.json", orderData)
+      .post("/orders.json?auth=" + token, orderData)
       .then((response) => {
         console.log(response.data);
         dispatch(purchaseBurgerSuccess(response.data.name, orderData));
@@ -51,10 +51,10 @@ export const fetchOrdersFail = (error) => {
     error: error,
   };
 };
-export const fetchOrders = () => {
+export const fetchOrders = (token) => {
   return (dispatch) => {
     instance
-      .get("/orders.json")
+      .get("/orders.json?auth=" + token)
       .then((res) => {
         const fetchOrders = [];
         for (let key in res.data) {

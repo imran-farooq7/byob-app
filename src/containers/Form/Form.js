@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Spinner from "../../components/UI/Spinner/Spinner";
-import instance from "../../axios";
+// import instance from "../../axios";
 import Button from "../../components/UI/Button/Button";
 import styles from "./form.module.css";
 import Input from "../../components/UI/Input/Input";
@@ -118,7 +118,7 @@ class Form extends Component {
       price: this.props.price,
       orderdata: formData,
     };
-    this.props.onBurgerOrder(order);
+    this.props.onBurgerOrder(order, this.props.token);
   };
 
   render() {
@@ -161,12 +161,13 @@ const mapStateToProps = (state) => {
     ings: state.burgerBuilder.ingredients,
     price: state.burgerBuilder.totalPrice,
     loading: state.order.loading,
+    token: state.auth.token,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    onBurgerOrder: (orderData) =>
-      dispatch(actions.purchaseBurgerStart(orderData)),
+    onBurgerOrder: (orderData, token) =>
+      dispatch(actions.purchaseBurgerStart(orderData, token)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Form);
