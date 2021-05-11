@@ -109,14 +109,14 @@ class Form extends Component {
     this.setState({ loading: true });
     const formData = {};
     for (let formElementIndentifier in this.state.orderForm) {
-      formData[formElementIndentifier] = this.state.orderForm[
-        formElementIndentifier
-      ].value;
+      formData[formElementIndentifier] =
+        this.state.orderForm[formElementIndentifier].value;
     }
     const order = {
       ingredients: this.props.ings,
       price: this.props.price,
       orderdata: formData,
+      userId: this.props.userId,
     };
     this.props.onBurgerOrder(order, this.props.token);
   };
@@ -162,6 +162,7 @@ const mapStateToProps = (state) => {
     price: state.burgerBuilder.totalPrice,
     loading: state.order.loading,
     token: state.auth.token,
+    userId: state.auth.userId,
   };
 };
 const mapDispatchToProps = (dispatch) => {

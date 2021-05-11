@@ -5,7 +5,7 @@ import Burger from "../../components/Burger/Burger";
 import BuildControls from "../../components/Burger/BuildControls/BuildControls";
 import Modal from "../../components/UI/Modal/Modal";
 import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
-import * as actionTypes from "../../store/actions/order";
+import * as actionTypes from "../../store/actions/index";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import * as burgerBuilderActions from "../../store/actions/index";
 
@@ -36,7 +36,12 @@ class BurgerBuilder extends Component {
   }
 
   purchaseHandler = () => {
-    this.setState({ purchasing: true });
+    if (this.props.isAuthenticated) {
+      this.setState({ purchasing: true });
+    } else {
+      this.props.onSetAuthRedirectPath("/checkout");
+      this.props.history.push("/auth");
+    }
   };
 
   purchaseCancelHandler = () => {
@@ -74,6 +79,7 @@ class BurgerBuilder extends Component {
             purchasable={this.updatePurchaseState(this.props.ings)}
             ordered={this.purchaseHandler}
             price={this.props.price}
+            isAuthenticated={this.props.isAuthenticated}
           />
         </Auxo>
       );
@@ -104,6 +110,7 @@ const mapStateToProps = (state) => {
   return {
     ings: state.burgerBuilder.ingredients,
     price: state.burgerBuilder.totalPrice,
+    isAuthenticated: state.auth.token !== null,
   };
 };
 const mapDispatchToProps = (dispatch) => {
@@ -114,6 +121,8 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(burgerBuilderActions.removeIngredients(ingName)),
     onInitIngredients: () => dispatch(burgerBuilderActions.initIngredient()),
     onInitPurchase: (token) => dispatch(actionTypes.purchaseInit(token)),
+    onSetAuthRedirectPath: (path) =>
+      dispatch(actionTypes.authPathRedirect(path)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(BurgerBuilder);

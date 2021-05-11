@@ -18,6 +18,7 @@ export const purchaseBurgerFail = (error) => {
 export const purchaseBurgerStart = (orderData, token) => {
   return (dispatch) => {
     dispatch(purchaseBurgerStarting());
+
     instance
       .post("/orders.json?auth=" + token, orderData)
       .then((response) => {
