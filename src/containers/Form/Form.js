@@ -100,7 +100,7 @@ class Form extends Component {
       updatedOrderFormElement.validation
     );
     updatedOrderFormElement.touched = true;
-    console.log(updatedOrderFormElement);
+    // console.log(updatedOrderFormElement);
     updatedOrderForm[inputIndentifier] = updatedOrderFormElement;
     this.setState({ orderForm: updatedOrderForm });
   };

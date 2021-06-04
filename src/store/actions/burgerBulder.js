@@ -26,7 +26,7 @@ export const initIngredient = () => {
         "https://byob-app-3145d-default-rtdb.firebaseio.com/ingredients.json"
       )
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         dispatch(setIngredients(response.data));
       });
   };

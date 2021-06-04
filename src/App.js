@@ -24,6 +24,7 @@ class App extends Component {
     if (this.props.isauthenticated) {
       routes = (
         <Switch>
+          <Route path="/auth" exact component={Auth} />
           <Route path="/logout" exact component={Logout} />
           <Route path="/" exact component={BurgerBuilder} />
           <Route path="/orders" exact component={OrderPage} />
