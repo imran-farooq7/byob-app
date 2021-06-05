@@ -1,14 +1,24 @@
 import React, { Component } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
-import Auth from "./containers/Auth/Auth";
+// import Auth from "";
 import Logout from "./containers/Auth/logout/Logout";
 import BurgerBuilder from "./containers/BurgerBuilder/BurgerBuilder";
-import Checkout from "./containers/checkout/Checkout";
-import OrderPage from "./containers/OrderPage/OrderPage";
+// import Checkout from "";
+// import OrderPage from "";
 import { connect } from "react-redux";
 import * as actions from "./store/actions/index";
+import asyncComponent from "./hoc/async/asyncComponent";
 
+const asyncCheckout = asyncComponent(() => {
+  return import("./containers/checkout/Checkout");
+});
+const asyncOrders = asyncComponent(() => {
+  return import("./containers/OrderPage/OrderPage");
+});
+const asyncAuth = asyncComponent(() => {
+  return import("./containers/Auth/Auth");
+});
 class App extends Component {
   componentDidMount() {
     this.props.onTryAuthSignUp();
@@ -16,7 +26,7 @@ class App extends Component {
   render() {
     let routes = (
       <Switch>
-        <Route path="/auth" exact component={Auth} />
+        <Route path="/auth" exact component={asyncAuth} />
         <Route path="/" exact component={BurgerBuilder} />
         <Redirect to="/" />
       </Switch>
@@ -24,11 +34,11 @@ class App extends Component {
     if (this.props.isauthenticated) {
       routes = (
         <Switch>
-          <Route path="/auth" exact component={Auth} />
+          <Route path="/auth" exact component={asyncAuth} />
           <Route path="/logout" exact component={Logout} />
           <Route path="/" exact component={BurgerBuilder} />
-          <Route path="/orders" exact component={OrderPage} />
-          <Route path="/checkout" component={Checkout} />
+          <Route path="/orders" exact component={asyncOrders} />
+          <Route path="/checkout" component={asyncCheckout} />
         </Switch>
       );
     }

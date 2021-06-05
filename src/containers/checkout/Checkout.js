@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import * as actions from "../../store/actions/index";
 
 class Checkout extends Component {
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.props.onInitPurchase();
   }
   checkoutCancelled = () => {

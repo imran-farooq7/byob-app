@@ -140,6 +140,7 @@ class Form extends Component {
             touched={formElement.config.touched}
             shouldValidate={formElement.config.validation}
             invalid={!formElement.config.validation.valid}
+            key={formElement.id}
           />
         ))}
         <Button btnType="Success">ORDER</Button>
